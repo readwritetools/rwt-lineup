@@ -91,7 +91,7 @@ export default class RwtLineup extends HTMLElement {
 		
 		var sourceref = this.getAttribute('sourceref');
 
-		var response = await fetch(sourceref, {cache: "no-cache"});		// send conditional request to server with ETag and If-None-Match
+		var response = await fetch(sourceref, {cache: "no-cache", referrerPolicy: 'no-referrer'});		// send conditional request to server with ETag and If-None-Match
 		if (response.status != 200 && response.status != 304)
 			return null;
 		var templateText = await response.text();
