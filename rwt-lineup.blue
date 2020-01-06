@@ -1,0 +1,20 @@
+!blue 2.0
+//=============================================================================
+//
+//  File:         /node_modules/rwt-linup/rwt-search.blue
+//  Language:     Blue-phrase
+//  Copyright:    Read Write Tools © 2020
+//  License:      MIT
+//  Initial date: Jan 5, 2020
+//  Contents:     A flexible menu using round images as hyperlinks
+//
+//=============================================================================
+
+!option --fragment
+
+div.clipframe#clipframe {
+	div.container#container {
+		slot
+	}
+	div.pullbar#pullbar ▼ ▼ ▼
+}

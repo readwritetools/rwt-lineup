@@ -1,0 +1,165 @@
+/*=============================================================================
+
+  File:         /node_modules/rwt-lineup/rwt-lineup.css
+  Language:     CSS
+  Copyright:    Read Write Tools © 2020
+  License:      MIT
+  Initial date: Jan 5, 2020
+  Contents:     A flexible menu using round images as hyperlinks
+
+=============================================================================*/
+
+/*
+#banner {
+	z-index: 1;
+}
+*/
+
+:host {
+	--pure-white: #fff;
+	--white: #ccc;
+	--gray: #777;
+	--dark-gray: #555;
+	--black: #333;
+	--transparent-black: #333D;
+	--medium-black: #222;
+	--nav-black: #111;
+	--pure-black: #000;
+	--js-blue: #76afe8;
+	--title-blue: #42affa;
+	--yellow: #ffffa4;
+	--red: #ff3d3d;
+	
+	/* custom element decorations */	
+	--color: var(--pure-white);
+	--accent-color1: var(--title-blue);
+	--accent-color2: var(--yellow);
+	--accent-color3: var(--dark-gray);
+	--background: var(--transparent-black);
+	--accent-background1: var(--light-black);
+	--accent-background2: var(--pure-black);
+
+	/* custom element variables */	
+	--img-size: 64px;
+	--img-margin: 16px;
+	--width: 100%;
+	--pullbar-height: 1rem;
+
+	/* calculated sizes */
+	--img-box-size: calc(var(--img-size) + 6px);
+	--container-height: calc(var(--height) - var(--pullbar-height));
+	--height: calc(var(--img-box-size) + var(--img-margin)*2 + var(--pullbar-height));
+}
+
+.clipframe {
+	position: relative;
+	width: var(--width);
+	height: var(--height);
+	margin: 0;
+	overflow: visible;
+	box-sizing: border-box;
+}
+
+.pullbar {
+	height: var(--pullbar-height);
+	max-width: 100%;
+	text-align: center;
+	margin: 0;
+	background-color: var(--accent-background1);
+	border-top: none;
+	border-right: none;
+	border-bottom: calc(var(--pullbar-height)*2/4) solid var(--background);
+	border-left: none;
+	font-size: calc(var(--pullbar-height)/4);
+	color: var(--color);
+	cursor: pointer;
+	box-sizing: border-box;
+}
+.pullbar:hover {
+	border-top: none;
+	border-right: 1px solid var(--accent-background1);
+	border-bottom: none;
+	border-left: 1px solid var(--accent-background1);
+	font-size: calc(var(--pullbar-height)/2);
+	background-color: var(--accent-background1);
+	padding-top: 0.25rem;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: flex-start;
+	width: 100%;
+	height: var(--container-height);
+	background-color: var(--background);
+	overflow: hidden;
+	border-color: var(--background);
+	border-style: solid;
+	border-width: 1px;
+	box-sizing: border-box;
+}
+.container.expand {
+	border-color: var(--background) var(--accent-background1);
+	border-style: solid;
+	border-width: 1px;
+}
+.container img {
+    width: var(--img-box-size);
+    height: var(--img-box-size);
+    padding: 2px;
+    background-color: #333;
+    border: 1px solid var(--color);
+    border-radius: 50%;
+    text-align: center;
+    margin: var(--img-margin);
+	box-sizing: border-box;
+}
+.container a {
+	text-decoration: none;
+	border-bottom: none;
+}
+.container a.activename {
+	background-color: var(--accent-background1);
+	border-radius: 50%;
+}
+.container a:hover img,
+.container a:focus img {
+	width: calc(var(--img-margin) + var(--img-box-size));
+    height: calc(var(--img-margin) + var(--img-box-size));
+    margin: calc(var(--img-margin)/2);
+    border: 2px solid var(--accent-color1);
+}
+.container a:active img {
+    border: 2px solid var(--accent-color2);
+}
+.container a:focus {
+    outline: none;
+}
+.container a:visited img {
+    border: 2px solid var(--accent-color3);
+}
+.container a:visited:hover img {
+    border: 2px solid var(--accent-color1);
+}
+#pullbar.pulsate {
+	animation-name: pulsate;
+	animation-duration: 3s;
+	animation-iteration-count: 1;
+}
+@keyframes pulsate {
+  0% {
+	background-color: var(--accent-background2);
+    opacity: 0;
+  }
+  50% {
+	background-color: var(--accent-background2);
+    opacity: 1;
+  }
+  100% {
+	background-color: initial;
+    opacity: 0.1;
+  }
+}	
+
