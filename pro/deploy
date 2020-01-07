@@ -16,6 +16,7 @@ run {
 	sh git add ../
 	sh git commit -m "deploy"
 	sh git push
+	onerror continue
 }
 
 
