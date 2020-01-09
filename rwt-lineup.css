@@ -33,17 +33,18 @@
 	--background: var(--transparent-black);
 	--accent-background1: var(--light-black);
 	--accent-background2: var(--pure-black);
+	--accent-background3: var(--dark-gray);
 
 	/* custom element variables */	
-	--img-size: 64px;
-	--img-margin: 16px;
+	--img-size: 54px;
+	--img-margin: 14px;
 	--width: 100%;
 	--pullbar-height: 1rem;
 
 	/* calculated sizing */
 	--img-box-size: calc(var(--img-size) + 6px);
 	--container-height: calc(var(--height) - var(--pullbar-height));
-	--height: calc(var(--img-box-size) + var(--img-margin)*2 + var(--pullbar-height));
+	--height: calc(var(--img-box-size) + var(--img-margin)*2 + var(--pullbar-height) + 2px);
 }
 
 .clipframe {
@@ -116,7 +117,7 @@
 	border-bottom: none;
 }
 .container a.activename {
-	background-color: var(--accent-background1);
+	background-color: var(--accent-background3);
 	border-radius: 50%;
 }
 .container a:hover img,
