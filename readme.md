@@ -11,7 +11,7 @@
 	<figcaption></figcaption>
 </figure>
 
-# The Line Up
+# The Lineup
 
 ## All the usual suspects
 
