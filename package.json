@@ -1,7 +1,7 @@
 {
   "name": "rwt-lineup",
   "version": "1.0.2",
-  "description": "A flexible menu using round images as hyperlinks. A W3C standard Web Component",
+  "description": "A flexible menu using round icons as hyperlinks. A W3C standard Web Component",
   "author": "Read Write Tools",
   "license": "MIT",
   "module": "rwt-lineup.js",
@@ -16,7 +16,8 @@
     "web-component",
     "custom-element",
     "html-template",
-    "shadow-dom"
+    "shadow-dom",
+    "readwritetools"
   ],
   "bugs": {
     "url": "https://github.com/readwritetools/rwt-lineup/issues"

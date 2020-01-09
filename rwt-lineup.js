@@ -5,7 +5,7 @@
 // Copyright:    Read Write Tools © 2020
 // License:      MIT
 // Initial date: Jan 5, 2020
-// Contents:     A flexible menu using round images as hyperlinks
+// Contents:     A flexible menu using round icons as hyperlinks
 //
 //=============================================================================
 
@@ -24,6 +24,7 @@ export default class RwtLineup extends HTMLElement {
 		
 		// properties
 		this.shortcutKey = null;
+		RwtLineup.elementInstance++;
 		this.collapseSender = `RwtLineup ${RwtLineup.elementInstance}`;
 		this.numAnchors = 0;
 		this.firstAnchorSize = 64;
@@ -79,8 +80,8 @@ export default class RwtLineup extends HTMLElement {
 	//
 	//  That file should contain HTML with hyperlinked images items like this:
 	//    <a href='/path/to/page1.html' tabindex=301 <img src='/img/page1.jpg' title='Page 1' \></a>
-	//    <a href='/path/to/page1.html' tabindex=301 <img src='/img/page1.jpg' title='Page 1' \></a>
-	//    <a href='/path/to/page1.html' tabindex=301 <img src='/img/page1.jpg' title='Page 1' \></a>
+	//    <a href='/path/to/page2.html' tabindex=301 <img src='/img/page2.jpg' title='Page 2' \></a>
+	//    <a href='/path/to/page3.html' tabindex=301 <img src='/img/page3.jpg' title='Page 3' \></a>
 	//
 	//< returns a document-fragment suitable for appending to the container element
 	//< returns null if the user has not specified a sourceref attribute or
