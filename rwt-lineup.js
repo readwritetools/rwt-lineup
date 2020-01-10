@@ -330,14 +330,20 @@ export default class RwtLineup extends HTMLElement {
 	
 	setReadout(el) {
 		if (el) {
-			this.readoutTitle.innerText = el.hasAttribute('data-title') ? el.getAttribute('data-title') : '';
-			this.readoutKicker.innerText = el.hasAttribute('data-kicker') ? el.getAttribute('data-kicker') : '';
+			this.readoutTitle.innerHTML = el.hasAttribute('data-title') ? el.getAttribute('data-title') : '&nbsp;';
+			this.readoutKicker.innerHTML = el.hasAttribute('data-kicker') ? el.getAttribute('data-kicker') : '&nbsp;';
 		}
 	}
 	
 	clearReadout() {
-		this.readoutTitle.innerText = '';
-		this.readoutKicker.innerText = '';
+		if (this.activeElement != null) {
+			this.readoutTitle.innerHTML = this.activeElement.hasAttribute('data-title') ? this.activeElement.getAttribute('data-title') : '&nbsp;';
+			this.readoutKicker.innerHTML = this.activeElement.hasAttribute('data-kicker') ? this.activeElement.getAttribute('data-kicker') : '&nbsp;';
+		}
+		else {
+			this.readoutTitle.innerHTML = '&nbsp;';
+			this.readoutKicker.innerHTML = '&nbsp;';
+		}
 	}
 	
 	//-------------------------------------------------------------------------

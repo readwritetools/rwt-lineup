@@ -29,7 +29,7 @@
 	--accent-color1: var(--title-blue);
 	--accent-color2: var(--yellow);
 	--accent-color3: var(--dark-gray);
-	--background: var(--transparent-black);
+	--background: var(--black);
 	--accent-background1: var(--light-black);
 	--accent-background2: var(--pure-black);
 
@@ -41,8 +41,9 @@
 
 	/* calculated sizes */
 	--img-box-size: calc(var(--img-size) + 6px);
-	--container-height: calc(var(--height) - var(--pullbar-height));
-	--height: calc(var(--img-box-size) + var(--img-margin)*2 + var(--pullbar-height) + 2px);
+	--readout-height: 1.2rem;
+	--container-height: calc(var(--img-box-size) + var(--img-margin)*2 + 2px);
+	--height: calc(var(--readout-height)*2 + var(container-height) + var(--pullbar-height));
 }
 
 .clipframe {
@@ -88,6 +89,7 @@
 	text-align: center;
 	margin: 0;
 	padding: 0;
+	height: var(--readout-height);
 }
 
 #title.readout {
@@ -158,8 +160,12 @@
 .container a:visited img {
     border: 2px solid var(--accent-color3);
 }
-.container a:visited:hover img {
-    border: 2px solid var(--accent-color1);
+.container a:visited:hover img,
+.container a:visited:focus img {
+	border: 2px solid var(--accent-color1);
+}
+.container a:visited:active img {
+    border: 2px solid var(--accent-color2);
 }
 #pullbar.pulsate {
 	animation-name: pulsate;
