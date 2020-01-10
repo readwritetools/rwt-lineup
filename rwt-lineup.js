@@ -186,7 +186,7 @@ export default class RwtLineup extends HTMLElement {
 			slottedAnchors[i].addEventListener('mouseenter', this.onMouseEnter.bind(this));
 			slottedAnchors[i].addEventListener('mouseleave', this.onMouseLeave.bind(this));
 		}
-}
+	}
 
 	//^ Get the user-specified shortcut key. This will be used to open the dialog.
 	//  Valid values are "F1", "F2", etc., specified with the *shortcut attribute on the custom element
@@ -225,8 +225,10 @@ export default class RwtLineup extends HTMLElement {
 		if (this.activeElement) {
 			this.activeElement.scrollIntoView({block:'center'});
 			this.activeElement.classList.add('activename');								//  use CSS to highlight the element
-			this.setReadout(this.activeElement);
+			this.setReadout(this.activeElement);										//  show the icon's title/kicker in the readout
 		}
+		else
+			this.clearReadout();														//  show the <rwt-lineup> title/kicker in the readout
 	}
 
 	// draw attention to the pull-out nav for newcomers
@@ -334,12 +336,20 @@ export default class RwtLineup extends HTMLElement {
 			this.readoutTitle.innerHTML = el.hasAttribute('data-title') ? el.getAttribute('data-title') : '&nbsp;';
 			this.readoutKicker.innerHTML = el.hasAttribute('data-kicker') ? el.getAttribute('data-kicker') : '&nbsp;';
 		}
+		else
+			this.clearReadout();
 	}
-	
+
+	//^ When nothing is focused or hovered, call this function to revert to showing the activeElement's title/kicker
+	//  If there is no activeElement (because the current page does not correspond to one of the icons), use the <rwt-lineup> tag's attributes
 	clearReadout() {
 		if (this.activeElement != null) {
 			this.readoutTitle.innerHTML = this.activeElement.hasAttribute('data-title') ? this.activeElement.getAttribute('data-title') : '&nbsp;';
 			this.readoutKicker.innerHTML = this.activeElement.hasAttribute('data-kicker') ? this.activeElement.getAttribute('data-kicker') : '&nbsp;';
+		}
+		else if (this.hasAttribute('data-title') && this.hasAttribute('data-kicker')) {
+			this.readoutTitle.innerHTML = this.getAttribute('data-title');
+			this.readoutKicker.innerHTML = this.getAttribute('data-kicker');
 		}
 		else {
 			this.readoutTitle.innerHTML = '&nbsp;';
