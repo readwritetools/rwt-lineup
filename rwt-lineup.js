@@ -5,7 +5,7 @@
 // Copyright:    Read Write Tools © 2020
 // License:      MIT
 // Initial date: Jan 5, 2020
-// Contents:     A flexible menu using round icons as hyperlinks
+// Contents:     A flexible menu using round images as hyperlinks
 //
 //=============================================================================
 
@@ -19,12 +19,14 @@ export default class RwtLineup extends HTMLElement {
 		
 		// child elements
 		this.clipframe = null;
+		this.readoutTitle = null;
+		this.readoutKicker = null;
 		this.container = null;
 		this.pullbar = null;
+		this.firstAnchor = null;
 		
 		// properties
 		this.shortcutKey = null;
-		RwtLineup.elementInstance++;
 		this.collapseSender = `RwtLineup ${RwtLineup.elementInstance}`;
 		this.numAnchors = 0;
 		this.firstAnchorSize = 64;
@@ -80,8 +82,8 @@ export default class RwtLineup extends HTMLElement {
 	//
 	//  That file should contain HTML with hyperlinked images items like this:
 	//    <a href='/path/to/page1.html' tabindex=301 <img src='/img/page1.jpg' title='Page 1' \></a>
-	//    <a href='/path/to/page2.html' tabindex=301 <img src='/img/page2.jpg' title='Page 2' \></a>
-	//    <a href='/path/to/page3.html' tabindex=301 <img src='/img/page3.jpg' title='Page 3' \></a>
+	//    <a href='/path/to/page1.html' tabindex=301 <img src='/img/page1.jpg' title='Page 1' \></a>
+	//    <a href='/path/to/page1.html' tabindex=301 <img src='/img/page1.jpg' title='Page 1' \></a>
 	//
 	//< returns a document-fragment suitable for appending to the container element
 	//< returns null if the user has not specified a sourceref attribute or
@@ -135,6 +137,8 @@ export default class RwtLineup extends HTMLElement {
 	//^ Identify this component's children
 	identifyChildren() {
 		this.clipframe = this.shadowRoot.getElementById('clipframe');
+		this.readoutTitle = this.shadowRoot.getElementById('title');
+		this.readoutKicker = this.shadowRoot.getElementById('kicker');
 		this.container = this.shadowRoot.getElementById('container');
 		this.pullbar = this.shadowRoot.getElementById('pullbar');
 	}		
@@ -144,13 +148,14 @@ export default class RwtLineup extends HTMLElement {
 		// first look to see how many anchors are in the user-specified template
 		var templatedAnchors = this.shadowRoot.querySelectorAll('#container a');
 		if (templatedAnchors.length > 0)
-			this.firstAnchorSize = templatedAnchors.item(0).offsetWidth;
+			this.firstAnchor = templatedAnchors.item(0);
 		
 		// now look to see how many anchors were slotted in
 		var slottedAnchors = this.querySelectorAll('a');
 		if (slottedAnchors.length > 0)
-			this.firstAnchorSize = slottedAnchors.item(0).offsetWidth;
+			this.firstAnchor = slottedAnchors.item(0);
 		
+		this.firstAnchorSize = this.firstAnchor.offsetWidth;
 		this.numAnchors = templatedAnchors.length + slottedAnchors.length;
 	}
 	
@@ -167,7 +172,21 @@ export default class RwtLineup extends HTMLElement {
 		// component events
 		this.container.addEventListener('click', this.onClickContainer.bind(this));
 		this.pullbar.addEventListener('click', this.onClickPullbar.bind(this));
-	}
+
+		var templatedAnchors = this.shadowRoot.querySelectorAll('#container a');
+		for (let i=0; i < templatedAnchors.length; i++) {
+			templatedAnchors[i].addEventListener('focus', this.onIconFocus.bind(this));
+			templatedAnchors[i].addEventListener('mouseenter', this.onMouseEnter.bind(this));
+			templatedAnchors[i].addEventListener('mouseleave', this.onMouseLeave.bind(this));
+		}
+		
+		var slottedAnchors = this.querySelectorAll('a');
+		for (let i=0; i < slottedAnchors.length; i++) {
+			slottedAnchors[i].addEventListener('focus', this.onIconFocus.bind(this));
+			slottedAnchors[i].addEventListener('mouseenter', this.onMouseEnter.bind(this));
+			slottedAnchors[i].addEventListener('mouseleave', this.onMouseLeave.bind(this));
+		}
+}
 
 	//^ Get the user-specified shortcut key. This will be used to open the dialog.
 	//  Valid values are "F1", "F2", etc., specified with the *shortcut attribute on the custom element
@@ -177,6 +196,9 @@ export default class RwtLineup extends HTMLElement {
 			this.shortcutKey = this.getAttribute('shortcut');
 		else
 			this.shortcutKey = 'F10';
+		
+		// Provide a hint to the user
+		this.pullbar.setAttribute('title', `Menu (${this.shortcutKey})`);
 	}
 
 	//^ Highlight the anchor image corresponding to this document
@@ -294,6 +316,30 @@ export default class RwtLineup extends HTMLElement {
 		this.toggleMenu(event);
 	}
 	
+	onIconFocus(event) {
+		this.setReadout(event.currentTarget);
+	}
+	
+	onMouseEnter(event) {
+		this.setReadout(event.currentTarget);
+	}
+	
+	onMouseLeave(event) {
+		this.clearReadout();
+	}
+	
+	setReadout(el) {
+		if (el) {
+			this.readoutTitle.innerText = el.hasAttribute('data-title') ? el.getAttribute('data-title') : '';
+			this.readoutKicker.innerText = el.hasAttribute('data-kicker') ? el.getAttribute('data-kicker') : '';
+		}
+	}
+	
+	clearReadout() {
+		this.readoutTitle.innerText = '';
+		this.readoutKicker.innerText = '';
+	}
+	
 	//-------------------------------------------------------------------------
 	// component methods
 	//-------------------------------------------------------------------------
@@ -310,14 +356,35 @@ export default class RwtLineup extends HTMLElement {
 	showMenu() {
 		this.collapseOtherPopups();
 		this.container.classList.add('expand');
-		this.resizeContainer();
-		if (this.activeElement != null)
-			this.activeElement.focus();
+		this.resizeContainer();		
+		this.giveFocusToAnAnchor();
 	}
 
 	hideMenu() {
 		this.container.classList.remove('expand');
 		this.container.style.height = 'var(--container-height)';
+	}
+	
+	// focus rules:
+	//  1) if an anchor within the container already has the focus, keep it
+	//  2) otherwise focus the icon corresponding to this page, if <meta name=lineup:this-url> was properly set
+	//  3) finally, fallback to the first icon in the container
+	giveFocusToAnAnchor() {
+		// for templated items
+		var elActiveElement = this.shadowRoot.activeElement;
+		if (elActiveElement != null && elActiveElement.tagName == 'A' && elActiveElement.parentElement == this.container)
+			return;
+		
+		// for slotted items
+		var elActiveElement = document.activeElement;
+		if (elActiveElement != null && elActiveElement.tagName == 'A' && elActiveElement.parentElement == this)
+			return;
+
+		// Rules 2 and 3
+		if (this.activeElement != null)
+			this.activeElement.focus();
+		else 
+			this.firstAnchor.focus();
 	}
 	
 	// This is called by both showMenu() and onResizeWindow()

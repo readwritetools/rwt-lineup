@@ -5,21 +5,20 @@
   Copyright:    Read Write Tools © 2020
   License:      MIT
   Initial date: Jan 5, 2020
-  Contents:     A flexible menu using round icons as hyperlinks
+  Contents:     A flexible menu using round images as hyperlinks
 
 =============================================================================*/
 
 :host {
-	--pure-black: #000;
-	--nav-black: #111;
-	--light-black: #171717;
-	--medium-black: #222;
-	--black: #333;
-	--transparent-black: #333E;
-	--dark-gray: #555;
-	--gray: #777;
-	--white: #ccc;
 	--pure-white: #fff;
+	--white: #ccc;
+	--gray: #777;
+	--dark-gray: #555;
+	--black: #333;
+	--transparent-black: #333D;
+	--medium-black: #222;
+	--nav-black: #111;
+	--pure-black: #000;
 	--js-blue: #76afe8;
 	--title-blue: #42affa;
 	--yellow: #ffffa4;
@@ -33,7 +32,6 @@
 	--background: var(--transparent-black);
 	--accent-background1: var(--light-black);
 	--accent-background2: var(--pure-black);
-	--accent-background3: var(--dark-gray);
 
 	/* custom element variables */	
 	--img-size: 54px;
@@ -41,7 +39,7 @@
 	--width: 100%;
 	--pullbar-height: 1rem;
 
-	/* calculated sizing */
+	/* calculated sizes */
 	--img-box-size: calc(var(--img-size) + 6px);
 	--container-height: calc(var(--height) - var(--pullbar-height));
 	--height: calc(var(--img-box-size) + var(--img-margin)*2 + var(--pullbar-height) + 2px);
@@ -81,6 +79,30 @@
 	padding-top: 0.25rem;
 }
 
+.readout {
+	background-color: var(--medium-black);
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 1rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+#title.readout {
+	font-weight: 700;
+	color: var(--white);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	padding-top: 0.5rem;
+}
+#kicker.readout {
+	font-weight: 400;
+	color: var(--white);
+	padding-bottom: 0.5rem;
+}
+
 .container {
 	display: flex;
 	flex-direction: row;
@@ -117,7 +139,7 @@
 	border-bottom: none;
 }
 .container a.activename {
-	background-color: var(--accent-background3);
+	background-color: var(--accent-background1);
 	border-radius: 50%;
 }
 .container a:hover img,
