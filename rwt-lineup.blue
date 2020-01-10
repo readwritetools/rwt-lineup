@@ -13,8 +13,8 @@
 !option --fragment
 
 div.clipframe#clipframe {
-	p .readout #title Citing
-	p .readout #kicker Scholarly citations with citemarks
+	p .readout #title
+	p .readout #kicker
 	div.container#container {
 		slot
 	}

@@ -218,13 +218,14 @@ export default class RwtLineup extends HTMLElement {
 		// find the corresponding anchor tag
 		if (this.thisURL != '') {
 			var selector = `a[href='${this.thisURL}']`;	
-			this.activeElement = this.container.querySelector(selector);				//  for elements added to shadow DOM
+			this.activeElement = this.shadowRoot.querySelector(selector);				//  for elements added to shadow DOM
 			if (this.activeElement == null)
 				this.activeElement = this.querySelector(selector);						//  for elements added as slot
 		}
 		if (this.activeElement) {
 			this.activeElement.scrollIntoView({block:'center'});
 			this.activeElement.classList.add('activename');								//  use CSS to highlight the element
+			this.setReadout(this.activeElement);
 		}
 	}
 
