@@ -191,7 +191,7 @@ export default class RwtLineup extends HTMLElement {
 	//^ Get the user-specified shortcut key. This will be used to open the dialog.
 	//  Valid values are "F1", "F2", etc., specified with the *shortcut attribute on the custom element
 	initializeShortcutKey() {
-		if (this.hasAttribute('shortcut'))
+		if (this.hasAttribute('shortcut')) {
 			this.shortcutKey = this.getAttribute('shortcut');
 			// Provide a hint to the user
 			this.pullbar.setAttribute('title', `Menu (${this.shortcutKey})`);
