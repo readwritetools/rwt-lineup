@@ -61,8 +61,8 @@ The component has these features:
 #### Prerequisites
 
 The <span>rwt-lineup</span> web component works in any browser that
-supports modern W3C standards. Templates are written using  notation, which can
-be compiled into HTML using the free <a href='https://hub.readwritetools.com/desktop/rwview.blue'>Read Write View</a>
+supports modern W3C standards. Templates are written using <span>BLUE</span><span>
+PHRASE</span> notation, which can be compiled into HTML using the free <a href='https://hub.readwritetools.com/desktop/rwview.blue'>Read Write View</a>
 desktop app. It has no other prerequisites. Distribution and installation are
 done with either NPM or via Github.
 
