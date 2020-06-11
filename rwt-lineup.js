@@ -29,9 +29,9 @@ export default class RwtLineup extends HTMLElement {
 		this.firstAnchor = null;
 		
 		// properties
-		this.shortcutKey = null;
 		this.instance = RwtLineup.elementInstance++;
-		this.collapseSender = `RwtLineup ${RwtLineup.elementInstance}`;
+		this.collapseSender = `RwtLineup ${this.instance}`;
+		this.shortcutKey = null;
 		this.numAnchors = 0;
 		this.firstAnchorSize = 64;
 		
@@ -79,7 +79,6 @@ export default class RwtLineup extends HTMLElement {
 	// initialization
 	//-------------------------------------------------------------------------
 
-
 	// Only the first instance of this component fetches the HTML text from the server.
 	// All other instances wait for it to issue an 'html-template-ready' event.
 	// If this function is called when the first instance is still pending,
@@ -90,8 +89,9 @@ export default class RwtLineup extends HTMLElement {
 	// and resolve the promise with a DocumentFragment.
 	getHtmlFragment() {
 		return new Promise(async (resolve, reject) => {
+			var htmlTemplateReady = `RwtLineup-html-template-ready`;
 			
-			document.addEventListener('html-template-ready', () => {
+			document.addEventListener(htmlTemplateReady, () => {
 				var template = document.createElement('template');
 				template.innerHTML = RwtLineup.htmlText;
 				resolve(template.content);
@@ -104,10 +104,10 @@ export default class RwtLineup extends HTMLElement {
 					return;
 				}
 				RwtLineup.htmlText = await response.text();
-				document.dispatchEvent(new Event('html-template-ready'));
+				document.dispatchEvent(new Event(htmlTemplateReady));
 			}
 			else if (RwtLineup.htmlText != null) {
-				document.dispatchEvent(new Event('html-template-ready'));
+				document.dispatchEvent(new Event(htmlTemplateReady));
 			}
 		});
 	}
@@ -117,8 +117,9 @@ export default class RwtLineup extends HTMLElement {
 	// and resolve the promise with that element.
 	getCssStyleElement() {
 		return new Promise(async (resolve, reject) => {
+			var cssTextReady = `RwtLineup-css-text-ready`;
 
-			document.addEventListener('css-text-ready', () => {
+			document.addEventListener(cssTextReady, () => {
 				var styleElement = document.createElement('style');
 				styleElement.innerHTML = RwtLineup.cssText;
 				resolve(styleElement);
@@ -131,10 +132,10 @@ export default class RwtLineup extends HTMLElement {
 					return;
 				}
 				RwtLineup.cssText = await response.text();
-				document.dispatchEvent(new Event('css-text-ready'));
+				document.dispatchEvent(new Event(cssTextReady));
 			}
 			else if (RwtLineup.cssText != null) {
-				document.dispatchEvent(new Event('css-text-ready'));
+				document.dispatchEvent(new Event(cssTextReady));
 			}
 		});
 	}
@@ -315,15 +316,14 @@ export default class RwtLineup extends HTMLElement {
 
 	//^ Send an event to close/hide all other registered popups
 	collapseOtherPopups() {
-		var collapseSender = this.collapseSender;
-		var collapseEvent = new CustomEvent('collapse-popup', {detail: { collapseSender }});
+		var collapseEvent = new CustomEvent('collapse-popup', {detail: this.collapseSender});
 		document.dispatchEvent(collapseEvent);
 	}
 	
 	//^ Listen for an event on the document instructing this component to close/hide
 	//  But don't collapse this component, if it was the one that generated it
 	onCollapsePopup(event) {
-		if (event.detail.sender == this.collapseSender)
+		if (event.detail == this.collapseSender)
 			return;
 		else
 			this.hideMenu();
