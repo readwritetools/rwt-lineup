@@ -9,16 +9,31 @@
 //
 //=============================================================================
 
-export default class RwtLineup extends HTMLElement {
+const Static = {
+	componentName:    'rwt-lineup',
+	elementInstance:  1,
+	htmlURL:          '/node_modules/rwt-lineup/rwt-lineup.blue',
+	cssURL:           '/node_modules/rwt-lineup/rwt-lineup.css',
+	htmlText:         null,
+	cssText:          null
+};
 
-	static elementInstance = 1;
-	static htmlURL  = '/node_modules/rwt-lineup/rwt-lineup.blue';
-	static cssURL   = '/node_modules/rwt-lineup/rwt-lineup.css';
-	static htmlText = null;
-	static cssText  = null;
+Object.seal(Static);
+
+export default class RwtLineup extends HTMLElement {
 
 	constructor() {
 		super();
+		
+		// guardrails
+		this.instance = Static.elementInstance++;
+		this.isComponentLoaded = false;
+
+		// properties
+		this.collapseSender = `${Static.componentName} ${this.instance}`;
+		this.shortcutKey = null;
+		this.numAnchors = 0;
+		this.firstAnchorSize = 64;
 		
 		// child elements
 		this.clipframe = null;
@@ -27,13 +42,6 @@ export default class RwtLineup extends HTMLElement {
 		this.container = null;
 		this.pullbar = null;
 		this.firstAnchor = null;
-		
-		// properties
-		this.instance = RwtLineup.elementInstance++;
-		this.collapseSender = `RwtLineup ${this.instance}`;
-		this.shortcutKey = null;
-		this.numAnchors = 0;
-		this.firstAnchorSize = 64;
 		
 		// highlight this document's menu item
 		this.activeElement = null;
@@ -69,6 +77,7 @@ export default class RwtLineup extends HTMLElement {
 			this.initializeShortcutKey();
 			this.highlightActiveElement();
 			this.pulsate();
+			this.sendComponentLoaded();
 		}
 		catch (err) {
 			console.log(err.message);
@@ -89,24 +98,24 @@ export default class RwtLineup extends HTMLElement {
 	// and resolve the promise with a DocumentFragment.
 	getHtmlFragment() {
 		return new Promise(async (resolve, reject) => {
-			var htmlTemplateReady = `RwtLineup-html-template-ready`;
+			var htmlTemplateReady = `${Static.componentName}-html-template-ready`;
 			
 			document.addEventListener(htmlTemplateReady, () => {
 				var template = document.createElement('template');
-				template.innerHTML = RwtLineup.htmlText;
+				template.innerHTML = Static.htmlText;
 				resolve(template.content);
 			});
 			
 			if (this.instance == 1) {
-				var response = await fetch(RwtLineup.htmlURL, {cache: "no-cache", referrerPolicy: 'no-referrer'});
+				var response = await fetch(Static.htmlURL, {cache: "no-cache", referrerPolicy: 'no-referrer'});
 				if (response.status != 200 && response.status != 304) {
-					reject(new Error(`Request for ${RwtLineup.htmlURL} returned with ${response.status}`));
+					reject(new Error(`Request for ${Static.htmlURL} returned with ${response.status}`));
 					return;
 				}
-				RwtLineup.htmlText = await response.text();
+				Static.htmlText = await response.text();
 				document.dispatchEvent(new Event(htmlTemplateReady));
 			}
-			else if (RwtLineup.htmlText != null) {
+			else if (Static.htmlText != null) {
 				document.dispatchEvent(new Event(htmlTemplateReady));
 			}
 		});
@@ -117,24 +126,24 @@ export default class RwtLineup extends HTMLElement {
 	// and resolve the promise with that element.
 	getCssStyleElement() {
 		return new Promise(async (resolve, reject) => {
-			var cssTextReady = `RwtLineup-css-text-ready`;
+			var cssTextReady = `${Static.componentName}-css-text-ready`;
 
 			document.addEventListener(cssTextReady, () => {
 				var styleElement = document.createElement('style');
-				styleElement.innerHTML = RwtLineup.cssText;
+				styleElement.innerHTML = Static.cssText;
 				resolve(styleElement);
 			});
 			
 			if (this.instance == 1) {
-				var response = await fetch(RwtLineup.cssURL, {cache: "no-cache", referrerPolicy: 'no-referrer'});
+				var response = await fetch(Static.cssURL, {cache: "no-cache", referrerPolicy: 'no-referrer'});
 				if (response.status != 200 && response.status != 304) {
-					reject(new Error(`Request for ${RwtLineup.cssURL} returned with ${response.status}`));
+					reject(new Error(`Request for ${Static.cssURL} returned with ${response.status}`));
 					return;
 				}
-				RwtLineup.cssText = await response.text();
+				Static.cssText = await response.text();
 				document.dispatchEvent(new Event(cssTextReady));
 			}
-			else if (RwtLineup.cssText != null) {
+			else if (Static.cssText != null) {
 				document.dispatchEvent(new Event(cssTextReady));
 			}
 		});
@@ -262,7 +271,7 @@ export default class RwtLineup extends HTMLElement {
 			this.clearReadout();														//  show the <rwt-lineup> title/kicker in the readout
 	}
 
-	// draw attention to the pull-out nav for newcomers
+	//^ Draw attention to the pull-out nav for newcomers
 	pulsate() {
 		var b = false;
 		// if the user has never been to this website before
@@ -279,6 +288,22 @@ export default class RwtLineup extends HTMLElement {
 		}
 		if (b)
 			this.pullbar.classList.add('pulsate');
+	}
+	
+	//^ Inform the document's custom element that it is ready for programmatic use 
+	sendComponentLoaded() {
+		this.isComponentLoaded = true;
+		this.dispatchEvent(new Event('component-loaded', {bubbles: true}));
+	}
+
+	//^ A Promise that resolves when the component is loaded
+	waitOnLoading() {
+		return new Promise((resolve) => {
+			if (this.isComponentLoaded == true)
+				resolve();
+			else
+				this.addEventListener('component-loaded', resolve);
+		});
 	}
 	
 	//-------------------------------------------------------------------------
@@ -445,4 +470,4 @@ export default class RwtLineup extends HTMLElement {
 	}
 }
 
-window.customElements.define('rwt-lineup', RwtLineup);
+window.customElements.define(Static.componentName, RwtLineup);
