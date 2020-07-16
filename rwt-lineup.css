@@ -43,7 +43,7 @@
 	--img-box-size: calc(var(--img-size) + 6px);
 	--readout-height: 1.2rem;
 	--container-height: calc(var(--img-box-size) + var(--img-margin)*2 + 2px);
-	--height: calc(var(--readout-height)*2 + var(container-height) + var(--pullbar-height));
+	--height: calc(var(--readout-height)*2 + var(--container-height) + var(--pullbar-height));
 }
 
 .clipframe {
