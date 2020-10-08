@@ -6,10 +6,16 @@
 
 
 
+
+
+
+
 <figure>
 	<img src='/img/components/lineup/rwt-lineup.png' width='100%' />
 	<figcaption></figcaption>
 </figure>
+
+##### Open Source DOM Component
 
 # The Lineup
 
@@ -23,14 +29,14 @@
 
 <table>
 	<tr><th>Abstract</th></tr>
-	<tr><td>The <span class=product>rwt-lineup</span> web component is a flexible menu using round images as hyperlinks, with a pullbar to expand items that have overflowed its single-line container.</td></tr>
+	<tr><td>The <span class=product>rwt-lineup</span> DOM component is a flexible menu using round images as hyperlinks, with a pullbar to expand items that have overflowed its single-line container.</td></tr>
 </table>
 
 ### Motivation
 
 Sometimes a visual menu is better than a textual menu.
 
-The <span>rwt-lineup</span> web component applies circular styling to
+The <span>rwt-lineup</span> DOM component applies circular styling to
 square images, providing a fully iconic interface. For situations where there
 are too many hyperlinks to fit in a single line, the extras are kept hidden
 until activated by the user, using either the visual pullbar or the component's `toggleMenu`
@@ -48,7 +54,7 @@ The component has these features:
       view when the page is loaded.
    * The menu has an event interface for expanding and collapsing itself.
    * The menu emits a custom event to close sibling menus and dialog boxes.
-   * Menu items may be kept separate from the web component, allowing the webmaster
+   * Menu items may be kept separate from the DOM component, allowing the webmaster
       to change its contents in a single centralized place. Alternatively, menu items
       may be slotted directly between the component's opening and closing tags.
    * A keyboard listener is provided to allow a shortcut key to expand/collapse the
@@ -58,9 +64,16 @@ The component has these features:
    * The first few times that a visitor interacts with your website, the pullbar
       pulses to draw attention to itself.
 
+#### In the wild
+
+To see an example of this component in use, visit the <a href='https://doppelmarks.com'>DOPPELMARKS</a>
+website. It uses this component at the top of the page. To understand what's
+going on under the hood, use the browser's inspector to view the HTML source
+code and network activity, and follow along as you read this documentation.
+
 #### Prerequisites
 
-The <span>rwt-lineup</span> web component works in any browser that
+The <span>rwt-lineup</span> DOM component works in any browser that
 supports modern W3C standards. Templates are written using <span>BLUE</span><span>
 PHRASE</span> notation, which can be compiled into HTML using the free <a href='https://hub.readwritetools.com/desktop/rwview.blue'>Read Write View</a>
 desktop app. It has no other prerequisites. Distribution and installation are
@@ -85,14 +98,14 @@ on your development computer.
 npm init
 ```
 
-   * Download and install the web component using the command:
+   * Download and install the DOM component using the command:
 ```bash
 npm install rwt-lineup
 ```
 
 
-Important note: This web component uses Node.js and NPM and `package.json` as a
-convenient *distribution and installation* mechanism. The web component itself
+Important note: This DOM component uses Node.js and NPM and `package.json` as a
+convenient *distribution and installation* mechanism. The DOM component itself
 does not need them.
 
 #### Installation using Github
@@ -100,13 +113,13 @@ does not need them.
 If you are more comfortable using Github for installation, follow these steps:
 
    * Create a directory `node_modules` in the root of your web project.
-   * Clone the <span>rwt-lineup</span> web component into it using the command:
+   * Clone the <span>rwt-lineup</span> DOM component into it using the command:
 ```bash
 git clone https://github.com/readwritetools/rwt-lineup.git
 ```
 
 
-### Using the web component
+### Using the DOM component
 
 After installation, you need to add two things to your HTML page to make use of
 it.
@@ -125,7 +138,7 @@ it.
          hotkey access.
       * For WAI-ARIA accessibility apply a `role=navigation` attribute.
       * For simple menus, the `sourceref` may be omitted and the menu hyperlinks may be
-         slotted into the web component. Simply place the hyperlinks directly between the
+         slotted into the DOM component. Simply place the hyperlinks directly between the
 `<rwt-lineup>` and `</rwt-lineup>` tags.
       * Here's an example HTML tag where the menu items are in a separate file:
 ```html
@@ -224,9 +237,22 @@ The menu can be controlled with its event interface.
 	<dd>The component listens on DOM <code>document</code> for <code>click</code> messages. When the user clicks anywhere outside the menu, it collapses itself.</dd>
 </dl>
 
+---
+
+### Reference
+
+
+<table>
+	<tr><td><img src='/img/read-write-hub.png' alt='DOM components logo' width=40 /></td>	<td>Documentation</td> 		<td><a href='https://hub.readwritetools.com/components/lineup.blue'>READ WRITE HUB</a></td></tr>
+	<tr><td><img src='/img/git.png' alt='git logo' width=40 /></td>	<td>Source code</td> 			<td><a href='https://github.com/readwritetools/rwt-lineup'>github</a></td></tr>
+	<tr><td><img src='/img/dom-components.png' alt='DOM components logo' width=40 /></td>	<td>Component catalog</td> 	<td><a href='https://domcomponents.com/lineup.blue'>DOM COMPONENTS</a></td></tr>
+	<tr><td><img src='/img/npm.png' alt='npm logo' width=40 /></td>	<td>Package installation</td> <td><a href='https://www.npmjs.com/package/rwt-lineup'>npm</a></td></tr>
+	<tr><td><img src='/img/read-write-stack.png' alt='Read Write Stack logo' width=40 /></td>	<td>Publication venue</td>	<td><a href='https://readwritestack.com/components/lineup.blue'>READ WRITE STACK</a></td></tr>
+</table>
+
 ### License
 
-The <span>rwt-lineup</span> web component is licensed under the MIT
+The <span>rwt-lineup</span> DOM component is licensed under the MIT
 License.
 
 <img src='/img/blue-seal-mit.png' width=80 align=right />
@@ -238,13 +264,4 @@ License.
 	<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 	<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 </details>
-
-### Availability
-
-
-<table>
-	<tr><td>Source code</td> 			<td><a href='https://github.com/readwritetools/rwt-lineup'>github</a></td></tr>
-	<tr><td>Package installation</td> <td><a href='https://www.npmjs.com/package/rwt-lineup'>NPM</a></td></tr>
-	<tr><td>Documentation</td> 		<td><a href='https://hub.readwritetools.com/components/lineup.blue'>Read Write Hub</a></td></tr>
-</table>
 

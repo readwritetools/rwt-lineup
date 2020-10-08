@@ -1,7 +1,7 @@
 {
   "name": "rwt-lineup",
   "version": "1.0.21",
-  "description": "A flexible menu using round icons as hyperlinks. A W3C standard Web Component",
+  "description": "A flexible menu using round icons as hyperlinks, a standards-based DOM Component",
   "author": "Read Write Tools",
   "license": "MIT",
   "module": "rwt-lineup.js",
