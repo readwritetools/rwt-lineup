@@ -10,8 +10,9 @@
 
 
 
+
 <figure>
-	<img src='/img/components/lineup/rwt-lineup.png' width='100%' />
+	<img src='/img/components/lineup/lineup-1500x750.png' width='100%' />
 	<figcaption></figcaption>
 </figure>
 
@@ -71,6 +72,8 @@ website. It uses this component at the top of the page. To understand what's
 going on under the hood, use the browser's inspector to view the HTML source
 code and network activity, and follow along as you read this documentation.
 
+### Installation
+
 #### Prerequisites
 
 The <span>rwt-lineup</span> DOM component works in any browser that
@@ -79,45 +82,38 @@ PHRASE</span> notation, which can be compiled into HTML using the free <a href='
 desktop app. It has no other prerequisites. Distribution and installation are
 done with either NPM or via Github.
 
-#### Installation using NPM
-
-If you are familiar with Node.js and the `package.json` file, you'll be
-comfortable installing the component just using this command:
-
-```bash
-npm install rwt-lineup
-```
-
-If you are a front-end Web developer with no prior experience with NPM, follow
-these general steps:
-
-   * Install <a href='https://nodejs.org'>Node.js/NPM</a>
-on your development computer.
-   * Create a `package.json` file in the root of your web project using the command:
-```bash
-npm init
-```
-
-   * Download and install the DOM component using the command:
-```bash
-npm install rwt-lineup
-```
+#### Download
 
 
-Important note: This DOM component uses Node.js and NPM and `package.json` as a
-convenient *distribution and installation* mechanism. The DOM component itself
-does not need them.
+<details>
+	<summary>Download using NPM</summary>
+	<p><b>OPTION 1:</b> Familiar with Node.js and the <code>package.json</code> file?<br />Great. Install the component with this command:</p>
+	<pre lang=bash>
+npm install rwt-lineup<br />	</pre>
+	<p><b>OPTION 2:</b> No prior experience using NPM?<br />Just follow these general steps:</p>
+	<ul>
+		<li>Install <a href='https://nodejs.org'>Node.js/NPM</a> on your development computer.</li>
+		<li>Create a <code>package.json</code> file in the root of your web project using the command:</li>
+		<pre lang=bash>
+npm init<br />		</pre>
+		<li>Download and install the DOM component using the command:</li>
+		<pre lang=bash>
+npm install rwt-lineup<br />		</pre>
+	</ul>
+	<p style='font-size:0.9em'>Important note: This DOM component uses Node.js and NPM and <code>package.json</code> as a convenient <i>distribution and installation</i> mechanism. The DOM component itself does not need them.</p>
+</details>
 
-#### Installation using Github
 
-If you are more comfortable using Github for installation, follow these steps:
-
-   * Create a directory `node_modules` in the root of your web project.
-   * Clone the <span>rwt-lineup</span> DOM component into it using the command:
-```bash
-git clone https://github.com/readwritetools/rwt-lineup.git
-```
-
+<details>
+	<summary>Download using Github</summary>
+	<p>If you prefer using Github directly, simply follow these steps:</p>
+	<ul>
+		<li>Create a <code>node_modules</code> directory in the root of your web project.</li>
+		<li>Clone the <span class=product>rwt-lineup</span> DOM component into it using the command:</li>
+		<pre lang=bash>
+git clone https://github.com/readwritetools/rwt-lineup.git<br />		</pre>
+	</ul>
+</details>
 
 ### Using the DOM component
 
